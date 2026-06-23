@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="ガジュマルのシンボル">
+  <rect width="64" height="64" rx="12" fill="#1f6b5a"/>
+  <!-- 樹冠 -->
+  <circle cx="32" cy="24" r="15" fill="#5fae8e"/>
+  <circle cx="22" cy="27" r="9" fill="#4f9a7c"/>
+  <circle cx="42" cy="27" r="9" fill="#4f9a7c"/>
+  <!-- 幹と気根（タコ足状） -->
+  <g fill="none" stroke="#e8d8c2" stroke-width="3" stroke-linecap="round">
+    <path d="M32 30 L32 50"/>
+    <path d="M32 36 C26 42 24 48 23 52"/>
+    <path d="M32 36 C38 42 40 48 41 52"/>
+    <path d="M32 42 C29 46 28 50 28 52"/>
+    <path d="M32 42 C35 46 36 50 36 52"/>
+  </g>
+  <rect x="20" y="51" width="24" height="3" rx="1.5" fill="#b56a3d"/>
+</svg>
