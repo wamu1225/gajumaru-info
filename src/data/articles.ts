@@ -34,6 +34,7 @@ const REF = {
   shuminoengei: { label: 'ガジュマル（観葉植物としての育て方）', publisher: 'みんなの趣味の園芸（NHK出版）', url: 'https://www.shuminoengei.jp/' },
   earthGajumaru: { label: 'ガジュマルの育て方（気根が育つ温度・湿度の目安）', publisher: 'アース製薬 アースガーデン', url: 'https://www.earth.jp/earthgarden/howto/kanyoushokubutsu/gajyumaru.html' },
   greensnapRoot: { label: 'ガジュマルの気根と根上げ（根を太らせ地表へ出す仕立て）', publisher: 'GreenSnap', url: 'https://greensnap.co.jp/columns/banyan_aerialroot' },
+  hanaprime: { label: 'ガジュマルの気根を増やす方法（ビニール袋で湿度を保つ）', publisher: 'HanaPrime 植物図鑑', url: 'https://hanaprime.jp/botanical-book/chinese-banyan/' },
 } as const;
 
 export const articles: Article[] = [
@@ -234,7 +235,7 @@ export const articles: Article[] = [
 
 ガジュマルの見どころは、幹や枝から空気中へ垂れる気根にある。気根は湿り気の多い環境ほどよく出るため、置き方しだいで買ったときより増やせる。
 
-アースガーデンの育て方は、気根が育ちやすい目安を気温二十五度以上、湿度は八十パーセント以上としている。春から夏の生育期に、葉と幹へ霧吹きで水をかけて湿り気を保つと出やすい。もっと積極的に増やすなら、鉢の株全体に透明なビニール袋をかぶせて湿度を閉じこめる方法がある。暖かい時期なら数日で新しい気根がのびてくる。ただし袋の中がむれると葉を傷めるので、ときどき開けて風を通す。
+アースガーデンの育て方は、気根が育ちやすい目安を気温二十五度以上、湿度は八十パーセント以上としている。春から夏の生育期に、葉と幹へ霧吹きで水をかけて湿り気を保つと出やすい。もっと積極的に増やすなら、植物図鑑の解説では、鉢の株全体に透明なビニール袋をかぶせて湿度を閉じこめる方法が紹介されている。暖かい時期なら数日で新しい気根がのびてくる。ただし袋の中がむれると葉を傷めるので、ときどき開けて風を通す。
 
 のびた気根が土に届くと、そこから水や養分を吸って、しだいに太い支柱根に育っていく。細いひげのようだった根が、幹と見分けのつかない太さになるのはこのためである。だから気根は切らずに残すと、株の姿に厚みが出る。野生の林で気根が果たす役割は [「絞め殺しの木」としての生態](/gajumaru-info/strangler/) で扱う。
 
@@ -248,8 +249,8 @@ export const articles: Article[] = [
 
 葉の黄ばみや落葉などの不調は [トラブル](/gajumaru-info/troubles/) で原因ごとに整理している。
 `,
-    updatedAt: '2026-07-22',
-    references: [REF.shuminoengei, REF.earthGajumaru],
+    updatedAt: '2026-07-24',
+    references: [REF.shuminoengei, REF.earthGajumaru, REF.hanaprime],
   },
 
   // ───────── 5. 増やし方 ─────────
