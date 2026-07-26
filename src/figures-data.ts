@@ -84,6 +84,55 @@ function propagationSvg(): string {
   );
 }
 
+// 3) 剪定の二通り（切り戻しと丸坊主）と、切る前の姿
+function pruningSvg(): string {
+  const panel = (px: number, title: string, inner: string) =>
+    `<g transform="translate(${px} 0)">` +
+    `<rect x="4" y="14" width="84" height="92" rx="8" fill="#ffffff" stroke="${GREEN}" stroke-width="1.4"/>` +
+    inner +
+    `<text x="46" y="120" font-size="10" font-weight="700" fill="${GREEN_DEEP}" text-anchor="middle">${title}</text>` +
+    `</g>`;
+  // 共通：鉢と、ふくらんだ幹
+  const base =
+    `<path d="M32 100 L60 100 L57 86 L35 86 Z" fill="#cdb49a" stroke="${TERRA}" stroke-width="1.2"/>` +
+    `<path d="M46 86 C41 78 41 70 46 64 C51 70 51 78 46 86 Z" fill="${BARK}"/>` +
+    `<path d="M46 70 L46 58" stroke="${BARK}" stroke-width="5" stroke-linecap="round"/>`;
+  const leaf = (x: number, y: number, r: number) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${LEAF}"/>`;
+  // 長くのびた枝（切る前）
+  const longBranches =
+    `<path d="M46 58 C36 48 28 40 22 32" stroke="${GREEN}" stroke-width="2.2" fill="none"/>` +
+    `<path d="M46 58 C56 48 64 42 70 34" stroke="${GREEN}" stroke-width="2.2" fill="none"/>` +
+    `<path d="M46 58 C46 46 48 38 50 28" stroke="${GREEN}" stroke-width="2.2" fill="none"/>`;
+  // 1: 伸びて形が乱れた株
+  const p1 = base + longBranches + leaf(20, 30, 6) + leaf(72, 32, 6) + leaf(51, 26, 5.5) + leaf(30, 40, 4.5) + leaf(62, 42, 4.5);
+  // 2: 切り戻し（枝の途中で切って短くそろえる）
+  const p2 = base +
+    `<path d="M46 58 C40 52 36 48 33 44" stroke="${GREEN}" stroke-width="2.2" fill="none"/>` +
+    `<path d="M46 58 C52 52 56 48 59 44" stroke="${GREEN}" stroke-width="2.2" fill="none"/>` +
+    `<path d="M46 58 L46 46" stroke="${GREEN}" stroke-width="2.2" fill="none"/>` +
+    // 切り落とす部分（うすい破線）
+    `<path d="M33 44 C28 38 24 34 22 32 M59 44 C64 38 68 36 70 34 M46 46 C47 38 49 34 50 28" stroke="#c9d6ce" stroke-width="1.8" fill="none" stroke-dasharray="3 3"/>` +
+    // 切る位置
+    `<line x1="24" y1="46" x2="68" y2="46" stroke="${TERRA}" stroke-width="1.3" stroke-dasharray="4 3"/>` +
+    leaf(32, 42, 5) + leaf(60, 42, 5) + leaf(46, 44, 4.5) +
+    `<text x="46" y="36" font-size="7" fill="${TERRA}" text-anchor="middle">ここで切る</text>`;
+  // 3: 丸坊主（枝葉を落として幹だけ残す）
+  const p3 = base +
+    `<path d="M46 58 C36 48 28 40 22 32 M46 58 C56 48 64 42 70 34 M46 58 C46 46 48 38 50 28" stroke="#c9d6ce" stroke-width="1.8" fill="none" stroke-dasharray="3 3"/>` +
+    `<line x1="26" y1="57" x2="66" y2="57" stroke="${TERRA}" stroke-width="1.3" stroke-dasharray="4 3"/>` +
+    `<circle cx="42" cy="63" r="2.6" fill="${LEAF}"/><circle cx="51" cy="66" r="2.2" fill="${LEAF}"/>` +
+    `<text x="46" y="48" font-size="7" fill="${TERRA}" text-anchor="middle">幹だけ残す</text>` +
+    `<text x="46" y="80" font-size="6.5" fill="${GREEN_DEEP}" text-anchor="middle">新芽が吹く</text>`;
+  return (
+    `<svg class="diagram-single" viewBox="0 0 300 130" width="100%" role="img" aria-label="ガジュマルの剪定の図。伸びて形が乱れた株を、枝の途中で切る切り戻しと、枝葉を落として幹だけ残す丸坊主の二通りで整える。">` +
+    `<rect width="300" height="130" fill="${BG}"/>` +
+    panel(0, '伸びて形が乱れる', p1) +
+    panel(102, '切り戻し', p2) +
+    panel(204, '丸坊主（強剪定）', p3) +
+    `</svg>`
+  );
+}
+
 const FIGURE_DATA: Record<string, { caption: string; inner: string }> = {
   'strangler-process': {
     caption: '絞め殺しの木としてのガジュマルの育ち方（模式図）。ほかの木の枝の上で芽生え、気根を伸ばして宿主の幹を包み、宿主が枯れたあとは中空の気根の柱として自立します。宿主を巻くのは、光の届きにくい林で早く高く育つための生き方です。',
@@ -92,6 +141,10 @@ const FIGURE_DATA: Record<string, { caption: string; inner: string }> = {
   'propagation-methods': {
     caption: 'ガジュマルの増やし方の三手法（模式図）。水挿しは根の様子を目で追え、土挿しはそのまま育てられ、取り木は樹形を保ったまま太い枝から株を取れます。いずれも生育期の前半（五月から七月ごろ）が向きます。',
     inner: `<div class="diagram-wrap">${propagationSvg()}</div>`,
+  },
+  'pruning-methods': {
+    caption: 'ガジュマルの剪定の二通り（模式図）。伸びて形が乱れた株は、枝の途中で切って短くそろえる切り戻しでも、枝葉をほとんど落として太い幹だけを残す丸坊主でも整えられます。芽吹く力が強いため、生育期（五月から七月ごろ）であれば、どちらのあともしばらくして新芽が吹きます。',
+    inner: `<div class="diagram-wrap">${pruningSvg()}</div>`,
   },
 };
 
