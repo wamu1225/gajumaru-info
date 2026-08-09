@@ -7,11 +7,11 @@ import { referencesHtml } from '../src/references.ts';
 import { sectionIconSvg } from '../src/section-icons.ts';
 import { tokenizeInline } from '../src/lib/inline.ts';
 import type { InlineToken } from '../src/lib/inline.ts';
+import { SITE_NAME, ABOUT_CONTENT, PRIVACY_CONTENT } from '../src/data/static-pages.ts';
 
 const DIST_DIR = path.resolve(process.cwd(), 'dist');
 const INDEX_HTML_PATH = path.join(DIST_DIR, 'index.html');
 const BASE_URL = 'https://study-apps.com/gajumaru-info';
-const SITE_NAME = 'ガジュマルの育て方・種類ガイド';
 const GREEN = '#1f6b5a';
 const GREEN_DEEP = '#134a3d';
 const TERRA = '#b56a3d';
@@ -336,33 +336,19 @@ function writeStaticPage(id: string, title: string, description: string, bodyHtm
   generatedCount++;
 }
 
-const sectionH2 = (t: string) => `<h2 style="font-size:1.3rem;color:${GREEN_DEEP};border-left:4px solid ${TERRA};padding-left:12px;margin:32px 0 12px">${t}</h2>`;
-
-// App.tsx の ABOUT_CONTENT / PRIVACY_CONTENT と同一テキスト（2026-08-08・O-2-14で本文を完全同期）
+// SSOT（src/data/static-pages.ts）から本文を読む（2026-08-10・O-2-15＝App.tsxとの二重管理を解消）
 writeStaticPage(
   'about',
   'サイトについて',
   `${SITE_NAME}について。本サイトの目的と情報源、編集方針、ペットの安全についての注意を説明します。`,
-  `<p>本サイト「${SITE_NAME}」は、観葉植物のガジュマルに興味を持った人が、植物としての姿から育て方、ペットとの安全、沖縄の文化までをひととおり確かめられるようにまとめたものです。</p>
-  ${sectionH2('編集と制作の方針')}
-  <p>本サイトの内容は、Plants of the World Online（キュー植物園）やASPCA、怪異・妖怪伝承データベースなどの公開情報を参照し、事実を確認したうえで、運営者が自分の言葉で書いています。出典の文章をそのまま転載することはありません。</p>
-  <p>植物の特徴や育て方には、環境や個体による幅があります。本サイトでは、確かめられた事実と、文化的な言い伝えを分けて示すよう努めています。</p>
-  ${sectionH2('ペットの安全について')}
-  <p>ガジュマルはイチジク属で、ASPCAは同じ属の Ficus benjamina を犬や猫に有毒としています。ペットの誤食が疑われるときや、ようすがおかしいときは、本サイトの情報で自己判断せず、かかりつけの獣医師にご相談いただきたい。本サイトの記述は、獣医師の診断や指示に代わるものではありません。</p>
-  ${sectionH2('お問い合わせ')}
-  <p>ご質問や誤りのご指摘は<a href="https://forms.gle/ccMv7oKwz6ysDHBe6" target="_blank" rel="noopener noreferrer" style="color:${GREEN}">こちらのGoogleフォーム</a>からお願いします。</p>`
+  markdownToHtml(ABOUT_CONTENT)
 );
 
 writeStaticPage(
   'privacy',
   'プライバシーポリシー',
   `${SITE_NAME}のプライバシーポリシー。Cookie・アクセス解析・広告の使用について。`,
-  `${sectionH2('アクセス解析')}
-  <p>本サイトでは、サイトの利用状況を把握するために Google Analytics を使用しています。Google Analytics はクッキーを利用して匿名のトラフィックデータを収集します。収集される情報は匿名で、個人を特定するものではありません。</p>
-  ${sectionH2('広告について')}
-  <p>本サイトでは Google AdSense などの第三者配信の広告サービスを利用することがあります。広告配信事業者は、ユーザーの興味に応じた広告を表示するためにクッキーを使用することがあります。Cookie を無効にする設定や、Google の広告設定により、パーソナライズ広告を無効にできます。</p>
-  ${sectionH2('免責事項')}
-  <p>本サイトの情報は可能な限り正確を期していますが、その完全性や正確性を保証するものではありません。ペットの健康に関わる判断は獣医師にご相談ください。本サイトの情報を利用したことにより生じた損害について、運営者は一切の責任を負いません。</p>`
+  markdownToHtml(PRIVACY_CONTENT)
 );
 
 const today = new Date().toISOString().split('T')[0];
