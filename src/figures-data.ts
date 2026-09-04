@@ -185,6 +185,47 @@ function pollinationSvg(): string {
   );
 }
 
+// 5) 根上げ（ニンジン仕立て）の三段階（土の中で育つ→浅植えで根を出す→太った根が地表に現れる）
+function rootRaisingSvg(): string {
+  const panel = (px: number, title: string, inner: string) =>
+    `<g transform="translate(${px} 0)">` +
+    `<rect x="4" y="14" width="84" height="92" rx="8" fill="#ffffff" stroke="${GREEN}" stroke-width="1.4"/>` +
+    inner +
+    `<text x="46" y="120" font-size="10.5" font-weight="700" fill="${GREEN_DEEP}" text-anchor="middle">${title}</text>` +
+    `</g>`;
+  const pot = `<path d="M30 100 L62 100 L58 84 L34 84 Z" fill="#cdb49a" stroke="${TERRA}" stroke-width="1.2"/>`;
+  const trunkAndLeaves =
+    `<path d="M46 66 L46 50" stroke="${BARK}" stroke-width="5" stroke-linecap="round"/>` +
+    `<circle cx="46" cy="42" r="10" fill="${LEAF}"/><circle cx="37" cy="46" r="6.5" fill="${LEAF}"/><circle cx="55" cy="46" r="6.5" fill="${LEAF}"/>`;
+  // 1: 土の中に埋まった根が、時間をかけて太る（見えないので破線で示す）
+  const p1 = pot +
+    `<path d="M30 84 L62 84 Z" stroke="${BARK}" stroke-width="1" fill="none"/>` +
+    `<rect x="31" y="84" width="30" height="15" fill="#c9b08f"/>` +
+    `<path d="M46 84 C41 88 41 94 46 98 C51 94 51 88 46 84 Z" stroke="${BARK}" stroke-width="1.4" fill="none" stroke-dasharray="2 2"/>` +
+    trunkAndLeaves;
+  // 2: 浅植えにして根を地表に出し、湿らせた水苔で覆う
+  const p2 = pot +
+    `<rect x="31" y="93" width="30" height="6" fill="#c9b08f"/>` +
+    `<path d="M46 78 C41 82 41 88 46 96 C51 88 51 82 46 78 Z" fill="${BARK}"/>` +
+    `<ellipse cx="46" cy="86" rx="10" ry="9" fill="#cfe0d8" fill-opacity="0.8" stroke="#9bc1b4" stroke-width="1.4"/>` +
+    `<path d="M46 76 L46 60" stroke="${BARK}" stroke-width="5" stroke-linecap="round"/>` +
+    `<circle cx="46" cy="52" r="10" fill="${LEAF}"/><circle cx="37" cy="56" r="6.5" fill="${LEAF}"/><circle cx="55" cy="56" r="6.5" fill="${LEAF}"/>`;
+  // 3: 露出した根が太り、「ニンジン」のかたちで地表に現れる
+  const p3 = pot +
+    `<rect x="31" y="93" width="30" height="6" fill="#c9b08f"/>` +
+    `<path d="M46 72 C38 78 37 88 46 98 C55 88 54 78 46 72 Z" fill="${BARK}"/>` +
+    `<path d="M46 70 L46 54" stroke="${BARK}" stroke-width="5" stroke-linecap="round"/>` +
+    `<circle cx="46" cy="46" r="10" fill="${LEAF}"/><circle cx="37" cy="50" r="6.5" fill="${LEAF}"/><circle cx="55" cy="50" r="6.5" fill="${LEAF}"/>`;
+  return (
+    `<svg class="diagram-single" viewBox="0 0 300 130" width="100%" role="img" aria-label="根上げ（ニンジン仕立て）の三段階の図。土の中で根が太り、浅植えにして地表に根を出し、太った根がニンジンのような姿で現れる。">` +
+    `<rect width="300" height="130" fill="${BG}"/>` +
+    panel(0, '土の中で太る', p1) +
+    panel(102, '浅植えで根を出す', p2) +
+    panel(204, '根がニンジンに', p3) +
+    `</svg>`
+  );
+}
+
 const FIGURE_DATA: Record<string, { caption: string; inner: string }> = {
   'strangler-process': {
     caption: '絞め殺しの木としてのガジュマルの育ち方（模式図）。ほかの木の枝の上で芽生え、気根を伸ばして宿主の幹を包み、宿主が枯れたあとは中空の気根の柱として自立します。宿主を巻くのは、光の届きにくい林で早く高く育つための生き方です。',
@@ -201,6 +242,10 @@ const FIGURE_DATA: Record<string, { caption: string; inner: string }> = {
   'wasp-pollination': {
     caption: 'イチジクコバチによる送粉のしくみ（模式図）。ガジュマルの花は、実のように見える花嚢の内側に隠れて咲くため外からは見えません。コバチは花嚢のごく小さな入り口（花嚢口）から中へ入り、産卵しながら花粉を運びます。イチジクは受粉をコバチに頼り、コバチは幼虫の育つ場所をイチジクに頼るという、互いがいなければ繁殖できない関係にあります。',
     inner: `<div class="diagram-wrap">${pollinationSvg()}</div>`,
+  },
+  'root-raising': {
+    caption: '根上げ（ニンジン仕立て）の三段階（模式図）。土の中で数年かけて根を太らせたあと、植えかえのときにわざと浅植えにして根を地表へ出します。露出した根は湿らせた水苔で乾燥を防ぎながら、生育期（四月から七月ごろ）にかけて太さと表面を落ち着かせ、やがてニンジンのような姿で地表に現れます。',
+    inner: `<div class="diagram-wrap">${rootRaisingSvg()}</div>`,
   },
 };
 
