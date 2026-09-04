@@ -90,7 +90,7 @@ function pruningSvg(): string {
     `<g transform="translate(${px} 0)">` +
     `<rect x="4" y="14" width="84" height="92" rx="8" fill="#ffffff" stroke="${GREEN}" stroke-width="1.4"/>` +
     inner +
-    `<text x="46" y="120" font-size="10" font-weight="700" fill="${GREEN_DEEP}" text-anchor="middle">${title}</text>` +
+    `<text x="46" y="120" font-size="10.5" font-weight="700" fill="${GREEN_DEEP}" text-anchor="middle">${title}</text>` +
     `</g>`;
   // 共通：鉢と、ふくらんだ幹
   const base =
@@ -115,13 +115,13 @@ function pruningSvg(): string {
     // 切る位置
     `<line x1="24" y1="46" x2="68" y2="46" stroke="${TERRA}" stroke-width="1.3" stroke-dasharray="4 3"/>` +
     leaf(32, 42, 5) + leaf(60, 42, 5) + leaf(46, 44, 4.5) +
-    `<text x="46" y="34" font-size="10.5" font-weight="700" fill="${TERRA}" text-anchor="middle">ここで切る</text>`;
+    `<text x="46" y="34" font-size="11" font-weight="700" fill="${TERRA}" text-anchor="middle">ここで切る</text>`;
   // 3: 丸坊主（枝葉を落として幹だけ残す）
   const p3 = base +
     `<path d="M46 58 C36 48 28 40 22 32 M46 58 C56 48 64 42 70 34 M46 58 C46 46 48 38 50 28" stroke="#c9d6ce" stroke-width="1.8" fill="none" stroke-dasharray="3 3"/>` +
     `<line x1="26" y1="57" x2="66" y2="57" stroke="${TERRA}" stroke-width="1.3" stroke-dasharray="4 3"/>` +
     `<circle cx="42" cy="63" r="2.6" fill="${LEAF}"/><circle cx="51" cy="66" r="2.2" fill="${LEAF}"/>` +
-    `<text x="46" y="34" font-size="10.5" font-weight="700" fill="${TERRA}" text-anchor="middle">幹だけ残す</text>`;
+    `<text x="46" y="34" font-size="11" font-weight="700" fill="${TERRA}" text-anchor="middle">幹だけ残す</text>`;
   return (
     `<svg class="diagram-single" viewBox="0 0 300 130" width="100%" role="img" aria-label="ガジュマルの剪定の図。伸びて形が乱れた株を、枝の途中で切る切り戻しと、枝葉を落として幹だけ残す丸坊主の二通りで整える。">` +
     `<rect width="300" height="130" fill="${BG}"/>` +
@@ -138,7 +138,7 @@ function pollinationSvg(): string {
     `<g transform="translate(${px} 0)">` +
     `<rect x="4" y="14" width="84" height="92" rx="8" fill="#ffffff" stroke="${GREEN}" stroke-width="1.4"/>` +
     inner +
-    `<text x="46" y="120" font-size="10" font-weight="700" fill="${GREEN_DEEP}" text-anchor="middle">${title}</text>` +
+    `<text x="46" y="120" font-size="10.5" font-weight="700" fill="${GREEN_DEEP}" text-anchor="middle">${title}</text>` +
     `</g>`;
   const wasp = (x: number, y: number, rot: number) =>
     `<g transform="translate(${x} ${y}) rotate(${rot})">` +
@@ -169,8 +169,8 @@ function pollinationSvg(): string {
     `<circle cx="27" cy="46" r="15" fill="${LEAF}" stroke="${GREEN}" stroke-width="1.4"/>` +
     `<circle cx="65" cy="46" r="15" fill="#f0e6d8" stroke="${TERRA}" stroke-width="1.4"/>` +
     `<path d="M43 46 L49 46" stroke="${BARK}" stroke-width="1.6" fill="none" marker-start="url(#pArrowL)" marker-end="url(#pArrow)"/>` +
-    `<text x="27" y="72" font-size="10.5" font-weight="700" fill="${GREEN_DEEP}" text-anchor="middle">受粉</text>` +
-    `<text x="65" y="72" font-size="10.5" font-weight="700" fill="${TERRA}" text-anchor="middle">幼虫</text>`;
+    `<text x="27" y="72" font-size="11" font-weight="700" fill="${GREEN_DEEP}" text-anchor="middle">受粉</text>` +
+    `<text x="65" y="72" font-size="11" font-weight="700" fill="${TERRA}" text-anchor="middle">幼虫</text>`;
   return (
     `<svg class="diagram-single" viewBox="0 0 300 130" width="100%" role="img" aria-label="イチジクコバチによる送粉のしくみの図。花は花嚢の内側に隠れており、コバチが花嚢口から入って産卵しながら花粉を運び、イチジクとコバチは互いに頼り合う関係にある。">` +
     `<defs>` +
