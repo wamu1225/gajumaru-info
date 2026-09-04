@@ -73,7 +73,7 @@ function propagationSvg(): string {
     `<line x1="40" y1="54" x2="40" y2="70" stroke="${TERRA}" stroke-width="1.6"/>` +
     `<line x1="52" y1="54" x2="52" y2="70" stroke="${TERRA}" stroke-width="1.6"/>` +
     `<circle cx="46" cy="30" r="9" fill="${LEAF}"/>` +
-    `<text x="46" y="64" font-size="6.5" fill="${GREEN_DEEP}" text-anchor="middle">水苔</text>`;
+    `<text x="46" y="86" font-size="10.5" font-weight="700" fill="${GREEN_DEEP}" text-anchor="middle">水苔</text>`;
   return (
     `<svg class="diagram-single" viewBox="0 0 300 130" width="100%" role="img" aria-label="ガジュマルの増やし方（水挿し、土挿し、取り木）の三手法の図">` +
     `<rect width="300" height="130" fill="${BG}"/>` +
@@ -115,20 +115,72 @@ function pruningSvg(): string {
     // 切る位置
     `<line x1="24" y1="46" x2="68" y2="46" stroke="${TERRA}" stroke-width="1.3" stroke-dasharray="4 3"/>` +
     leaf(32, 42, 5) + leaf(60, 42, 5) + leaf(46, 44, 4.5) +
-    `<text x="46" y="36" font-size="7" fill="${TERRA}" text-anchor="middle">ここで切る</text>`;
+    `<text x="46" y="34" font-size="10.5" font-weight="700" fill="${TERRA}" text-anchor="middle">ここで切る</text>`;
   // 3: 丸坊主（枝葉を落として幹だけ残す）
   const p3 = base +
     `<path d="M46 58 C36 48 28 40 22 32 M46 58 C56 48 64 42 70 34 M46 58 C46 46 48 38 50 28" stroke="#c9d6ce" stroke-width="1.8" fill="none" stroke-dasharray="3 3"/>` +
     `<line x1="26" y1="57" x2="66" y2="57" stroke="${TERRA}" stroke-width="1.3" stroke-dasharray="4 3"/>` +
     `<circle cx="42" cy="63" r="2.6" fill="${LEAF}"/><circle cx="51" cy="66" r="2.2" fill="${LEAF}"/>` +
-    `<text x="46" y="48" font-size="7" fill="${TERRA}" text-anchor="middle">幹だけ残す</text>` +
-    `<text x="46" y="80" font-size="6.5" fill="${GREEN_DEEP}" text-anchor="middle">新芽が吹く</text>`;
+    `<text x="46" y="34" font-size="10.5" font-weight="700" fill="${TERRA}" text-anchor="middle">幹だけ残す</text>`;
   return (
     `<svg class="diagram-single" viewBox="0 0 300 130" width="100%" role="img" aria-label="ガジュマルの剪定の図。伸びて形が乱れた株を、枝の途中で切る切り戻しと、枝葉を落として幹だけ残す丸坊主の二通りで整える。">` +
     `<rect width="300" height="130" fill="${BG}"/>` +
     panel(0, '伸びて形が乱れる', p1) +
     panel(102, '切り戻し', p2) +
     panel(204, '丸坊主（強剪定）', p3) +
+    `</svg>`
+  );
+}
+
+// 4) イチジクコバチによる送粉のしくみ（花嚢の内側→コバチの出入り→相利共生）
+function pollinationSvg(): string {
+  const panel = (px: number, title: string, inner: string) =>
+    `<g transform="translate(${px} 0)">` +
+    `<rect x="4" y="14" width="84" height="92" rx="8" fill="#ffffff" stroke="${GREEN}" stroke-width="1.4"/>` +
+    inner +
+    `<text x="46" y="120" font-size="10" font-weight="700" fill="${GREEN_DEEP}" text-anchor="middle">${title}</text>` +
+    `</g>`;
+  const wasp = (x: number, y: number, rot: number) =>
+    `<g transform="translate(${x} ${y}) rotate(${rot})">` +
+    `<ellipse cx="0" cy="-4" rx="3.4" ry="6" fill="${GREEN_DEEP}"/>` +
+    `<ellipse cx="-4" cy="-6" rx="3" ry="1.6" fill="#cfe0d8" fill-opacity="0.85" transform="rotate(-20 -4 -6)"/>` +
+    `<ellipse cx="4" cy="-6" rx="3" ry="1.6" fill="#cfe0d8" fill-opacity="0.85" transform="rotate(20 4 -6)"/>` +
+    `</g>`;
+  // 花嚢（外からは実のように見える丸い袋）。花は内側の壁に並ぶため外からは見えない。
+  const syconium = (cutaway: boolean) =>
+    `<circle cx="46" cy="62" r="24" fill="${LEAF}" fill-opacity="${cutaway ? 0.35 : 1}" stroke="${GREEN}" stroke-width="1.6"/>` +
+    // 花嚢口（ごく小さな入り口）
+    `<path d="M42 39 L50 39 L46 33 Z" fill="${TERRA}"/>`;
+  const flowersInside =
+    [...Array(7)].map((_, i) => {
+      const a = (Math.PI * 2 * i) / 7 - Math.PI / 2;
+      const r = 17;
+      const x = 46 + r * Math.cos(a);
+      const y = 62 + r * Math.sin(a);
+      return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="2.2" fill="${TERRA}"/>`;
+    }).join('');
+  // 1: 花は花嚢の内側に隠れている（外からは見えない・パネル見出しで説明済のため図中に文字は置かない）
+  const p1 = syconium(true) + flowersInside;
+  // 2: コバチが花嚢口から入り、産卵しながら花粉を運ぶ（同上）
+  const p2 = syconium(true) + flowersInside + wasp(46, 30, 25) +
+    `<path d="M46 34 L46 44" stroke="${TERRA}" stroke-width="1.6" stroke-dasharray="2 2"/>`;
+  // 3: 相利共生＝イチジクは受粉、コバチは幼虫の場所を得る（ラベルは円の下に配置し可読サイズを確保）
+  const p3 =
+    `<circle cx="27" cy="46" r="15" fill="${LEAF}" stroke="${GREEN}" stroke-width="1.4"/>` +
+    `<circle cx="65" cy="46" r="15" fill="#f0e6d8" stroke="${TERRA}" stroke-width="1.4"/>` +
+    `<path d="M43 46 L49 46" stroke="${BARK}" stroke-width="1.6" fill="none" marker-start="url(#pArrowL)" marker-end="url(#pArrow)"/>` +
+    `<text x="27" y="72" font-size="10.5" font-weight="700" fill="${GREEN_DEEP}" text-anchor="middle">受粉</text>` +
+    `<text x="65" y="72" font-size="10.5" font-weight="700" fill="${TERRA}" text-anchor="middle">幼虫</text>`;
+  return (
+    `<svg class="diagram-single" viewBox="0 0 300 130" width="100%" role="img" aria-label="イチジクコバチによる送粉のしくみの図。花は花嚢の内側に隠れており、コバチが花嚢口から入って産卵しながら花粉を運び、イチジクとコバチは互いに頼り合う関係にある。">` +
+    `<defs>` +
+    `<marker id="pArrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 Z" fill="${BARK}"/></marker>` +
+    `<marker id="pArrowL" markerWidth="6" markerHeight="6" refX="1" refY="3" orient="auto"><path d="M6 0 L0 3 L6 6 Z" fill="${BARK}"/></marker>` +
+    `</defs>` +
+    `<rect width="300" height="130" fill="${BG}"/>` +
+    panel(0, '花は内側に隠れる', p1) +
+    panel(102, 'コバチが入り込む', p2) +
+    panel(204, '互いに頼り合う', p3) +
     `</svg>`
   );
 }
@@ -145,6 +197,10 @@ const FIGURE_DATA: Record<string, { caption: string; inner: string }> = {
   'pruning-methods': {
     caption: 'ガジュマルの剪定の二通り（模式図）。伸びて形が乱れた株は、枝の途中で切って短くそろえる切り戻しでも、枝葉をほとんど落として太い幹だけを残す丸坊主でも整えられます。芽吹く力が強いため、生育期（五月から七月ごろ）であれば、どちらのあともしばらくして新芽が吹きます。',
     inner: `<div class="diagram-wrap">${pruningSvg()}</div>`,
+  },
+  'wasp-pollination': {
+    caption: 'イチジクコバチによる送粉のしくみ（模式図）。ガジュマルの花は、実のように見える花嚢の内側に隠れて咲くため外からは見えません。コバチは花嚢のごく小さな入り口（花嚢口）から中へ入り、産卵しながら花粉を運びます。イチジクは受粉をコバチに頼り、コバチは幼虫の育つ場所をイチジクに頼るという、互いがいなければ繁殖できない関係にあります。',
+    inner: `<div class="diagram-wrap">${pollinationSvg()}</div>`,
   },
 };
 
