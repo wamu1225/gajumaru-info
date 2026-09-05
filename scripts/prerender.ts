@@ -256,6 +256,19 @@ function applyMeta(html: string, title: string, description: string, urlPath: st
     .replace(/<meta name="twitter:description" content="[^"]*"/, `<meta name="twitter:description" content="${escapeHtml(description)}"`);
 }
 
+// FAQ記事の本文（**質問?**\n\n回答...の対）からFAQPage構造化データを機械抽出する。
+// 手書きの重複データを持たず本文を単一の真実源にするため、記事側の質問文言を変えれば自動で追随する。
+function extractFaqJsonLd(a: Article): string | null {
+  const matches = [...a.content.matchAll(/^\*\*(.+?)\*\*\n\n([\s\S]+?)(?=\n\n\*\*|\n\n##|\n\n📖|$)/gm)];
+  if (matches.length === 0) return null;
+  const mainEntity = matches.map(([, q, ans]) => ({
+    '@type': 'Question',
+    name: q.trim(),
+    acceptedAnswer: { '@type': 'Answer', text: ans.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').trim() },
+  }));
+  return JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity });
+}
+
 function writeArticlePage(a: Article) {
   const dir = path.join(DIST_DIR, a.id);
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
@@ -286,10 +299,12 @@ function writeArticlePage(a: Article) {
     ],
   });
 
-  html = html.replace(
-    '</head>',
-    `<script type="application/ld+json">${articleJsonLd}</script>\n  <script type="application/ld+json">${breadcrumbJsonLd}</script>\n  </head>`
-  );
+  const faqJsonLd = extractFaqJsonLd(a);
+  const jsonLdScripts = [articleJsonLd, breadcrumbJsonLd, ...(faqJsonLd ? [faqJsonLd] : [])]
+    .map((j) => `<script type="application/ld+json">${j}</script>`)
+    .join('\n  ');
+
+  html = html.replace('</head>', `${jsonLdScripts}\n  </head>`);
 
   fs.writeFileSync(path.join(dir, 'index.html'), html);
   generatedCount++;
