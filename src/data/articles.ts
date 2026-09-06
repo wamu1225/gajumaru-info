@@ -86,7 +86,7 @@ export const articles: Article[] = [
 
 地表に張り出す太い気根は見ごたえがあり、その力強い姿が観葉植物としての人気を支えています。気根の生態は、ガジュマルが「絞め殺しの木」と呼ばれることにもつながります。くわしくは [絞め殺しの木としての生態](/gajumaru-info/strangler/) で扱います。
 `,
-    updatedAt: '2026-07-11',
+    updatedAt: '2026-09-06',
     references: [REF.powo, REF.britannica],
   },
 
@@ -182,7 +182,7 @@ export const articles: Article[] = [
 
 迎えたあとの育て方は [育て方](/gajumaru-info/growing/) で、増やし方は [増やし方](/gajumaru-info/propagation/) で扱います。
 `,
-    updatedAt: '2026-07-22',
+    updatedAt: '2026-09-06',
     references: [REF.shuminoengei, REF.greensnapRoot],
   },
 
@@ -409,7 +409,7 @@ ASPCAが挙げる症状は、消化器と皮膚の刺激です。葉や樹液を
 
 「ガジュマルは無害だから大丈夫」という思い込みを手放し、触れさせない置き方を選べば、ペットと無理なく共存できます。
 `,
-    updatedAt: '2026-07-11',
+    updatedAt: '2026-09-06',
     references: [REF.aspca, REF.powo],
   },
 
