@@ -403,6 +403,7 @@ function Footer() {
         <a href="https://study-apps.com/editorial-policy/">編集方針</a>
         <a href="https://study-apps.com/">study-apps.com</a>
       </div>
+      <div className="site-footer-links"><span>ほかの 植物ガイド：<a href="https://study-apps.com/beets-info/">ビーツ</a> ・ <a href="https://study-apps.com/monstera-info/">モンステラ</a> ・ <a href="https://study-apps.com/sprout-info/">スプラウト</a></span></div>
       <div className="site-footer-note">
         本サイトはガジュマルに関する一般的な情報を、信頼できる出典をもとに自分の言葉でまとめたものです。ペットの健康に関わる判断は獣医師にご相談ください。
       </div>
